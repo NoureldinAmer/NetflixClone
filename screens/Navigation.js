@@ -7,22 +7,9 @@ import {
   Provider as ThemeProvider,
 } from "react-native-paper";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-
-const HomeScreen = () => (
-  <View style={styles.screen}>
-    <Text style={styles.text}>Music</Text>
-  </View>
-);
-const SearchScreen = () => (
-  <View style={styles.screen}>
-    <Text style={styles.text}>Albums</Text>
-  </View>
-);
-const ExploreScreen = () => (
-  <View style={styles.screen}>
-    <Text style={styles.text}>Recents</Text>
-  </View>
-);
+import HomeScreen from "./HomeScreen";
+import ExploreScreen from "./ExploreScreen";
+import SearchScreen from "./SearchScreen";
 
 const theme = {
   ...DefaultTheme,
@@ -56,6 +43,7 @@ export default function Navigation() {
       <SafeAreaProvider>
         <BottomNavigation
           sceneAnimationEnabled
+          compact={true}
           sceneAnimationType={"shifting"}
           navigationState={{
             index,
@@ -64,7 +52,8 @@ export default function Navigation() {
           onIndexChange={setIndex}
           renderScene={renderScene}
           barStyle={{
-            backgroundColor: "white",
+            height: 85,
+            backgroundColor: "#121212",
           }}
         />
       </SafeAreaProvider>
