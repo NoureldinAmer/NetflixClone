@@ -28,17 +28,12 @@ const HomeScreen = () => {
             //     />
             //   );
             // },
-
-            // headerTitle: () => {
-            //   return <NetflixLogo />;
-            //},
             statusBarTranslucent: true,
             contentStyle: { backgroundColor: "#000" },
             headerLargeTitleShadowVisible: true,
             headerBlurEffect: "systemUltraThinMaterialDark",
             headerTransparent: true,
             headerTitleAlign: "left",
-            //headerLargeTitle: true,
             headerStyle: {
               height: 50,
               backgroundColor:
@@ -55,7 +50,7 @@ const HomeScreen = () => {
           name="details"
           component={MediaDetails}
           options={{
-            //contentStyle: { backgroundColor: "#000" },
+            contentStyle: { backgroundColor: "transparent" },
             presentation: "modal",
             headerShown: false,
           }}
