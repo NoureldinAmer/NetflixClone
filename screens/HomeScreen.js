@@ -67,6 +67,7 @@ const HomeScreen = () => {
           name="modal"
           component={ModalStackView}
           options={{
+            contentStyle: { backgroundColor: "transparent" },
             presentation: "modal",
             headerShown: false,
           }}
