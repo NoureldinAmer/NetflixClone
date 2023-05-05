@@ -1,12 +1,5 @@
 import MediaRecommendations from "./MediaRecommendations";
-import {
-  StyleSheet,
-  View,
-  Text,
-  Pressable,
-  ScrollView,
-  FlatList,
-} from "react-native";
+import { StyleSheet, View, Text, Pressable, ScrollView } from "react-native";
 import React, { useRef } from "react";
 import { WebView } from "react-native-webview";
 import { AntDesign } from "@expo/vector-icons";
@@ -14,15 +7,7 @@ import { Entypo } from "@expo/vector-icons";
 import { Ionicons } from "react-native-vector-icons";
 import { Feather } from "react-native-vector-icons";
 import { FontAwesome } from "react-native-vector-icons";
-
-const Icon = ({ name, size, color }) => {
-  return (
-    <View style={styles.iconContainer}>
-      <View style={styles.iconBackground} />
-      <AntDesign name={name} size={size} color={color} />
-    </View>
-  );
-};
+import VideoPlayerIcon from "./VideoPlayerIcon";
 
 const MediaDetailsSecondary = ({ route, navigation }) => {
   const webViewRef = useRef(null);
@@ -39,9 +24,13 @@ const MediaDetailsSecondary = ({ route, navigation }) => {
     }
   };
 
-  const closeModal = () => {
+  const handleCloseButton = () => {
     navigation.popToTop();
     navigation.goBack(null);
+  };
+
+  const HandleBackButton = () => {
+    navigation.goBack();
   };
 
   const clickMiddle = () => {
@@ -60,8 +49,17 @@ const MediaDetailsSecondary = ({ route, navigation }) => {
     <View style={styles.container}>
       <View style={{ height: 300, backgroundColor: "green", width: "100%" }}>
         <View style={styles.exitButton}>
-          <Pressable onPress={closeModal}>
-            <Icon name="closecircle" size={24} color="#272526" />
+          <Pressable onPress={handleCloseButton}>
+            <VideoPlayerIcon>
+              <AntDesign name="closecircle" size={24} color="#272526" />
+            </VideoPlayerIcon>
+          </Pressable>
+        </View>
+        <View style={styles.backButton}>
+          <Pressable onPress={HandleBackButton}>
+            <VideoPlayerIcon>
+              <AntDesign name="leftcircle" size={24} color="black" />
+            </VideoPlayerIcon>
           </Pressable>
         </View>
         <WebView
@@ -154,7 +152,7 @@ const MediaDetailsSecondary = ({ route, navigation }) => {
 
 export default MediaDetailsSecondary;
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
@@ -236,6 +234,12 @@ const styles = StyleSheet.create({
     right: 13,
     zIndex: 1,
   },
+  backButton: {
+    position: "absolute",
+    top: 13,
+    left: 13,
+    zIndex: 1,
+  },
   watchList: {
     flexDirection: "row",
     paddingLeft: 15,
@@ -256,18 +260,5 @@ const styles = StyleSheet.create({
     fontFamily: "netflix-light",
     fontSize: 13,
     color: "#BFBFBF",
-  },
-  iconContainer: {
-    position: "relative",
-    borderRadius: "50%",
-  },
-  iconBackground: {
-    width: 20,
-    height: 20,
-    borderRadius: 10,
-    backgroundColor: "white",
-    position: "absolute",
-    top: 2,
-    right: 2,
   },
 });
