@@ -3,17 +3,41 @@ import { Image, Platform, Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreenLists from "./../components/HomeScreenLists";
-import MediaDetails from "../components/MediaDetails";
-import { SvgUri } from "react-native-svg";
+import MediaDetails from "../components/MediaDetails/MediaDetails";
+import MediaDetailsSecondary from "../components/MediaDetails/MediaDetailsSeconday";
 import NetflixLogo from "./../assets/NetflixLogo.svg";
-const stack = createNativeStackNavigator();
+
+const RootStack = createNativeStackNavigator();
+const ModalStack = createNativeStackNavigator();
+
+const ModalStackView = () => (
+  <ModalStack.Navigator>
+    <ModalStack.Screen
+      name="details"
+      component={MediaDetails}
+      options={{
+        contentStyle: { backgroundColor: "transparent" },
+        presentation: "modal",
+        headerShown: false,
+      }}
+    />
+    <ModalStack.Screen
+      name="detailsSecondary"
+      component={MediaDetailsSecondary}
+      options={{
+        contentStyle: { backgroundColor: "#000" },
+        presentation: "card",
+        headerShown: false,
+      }}
+    />
+  </ModalStack.Navigator>
+);
 
 const HomeScreen = () => {
   return (
     <NavigationContainer>
-      <stack.Navigator>
-        {/* <HomeScreenLists /> */}
-        <stack.Screen
+      <RootStack.Navigator>
+        <RootStack.Screen
           name="lists"
           component={HomeScreenLists}
           options={{
@@ -21,13 +45,6 @@ const HomeScreen = () => {
             headerLeft: () => {
               return <NetflixLogo width={40} height={30} />;
             },
-            // headerLeft: () => {
-            //   return (
-            //     <Image
-            //       source={require("./../assets/Netflix-avatar.png")}
-            //     />
-            //   );
-            // },
             statusBarTranslucent: true,
             contentStyle: { backgroundColor: "#000" },
             headerLargeTitleShadowVisible: true,
@@ -46,16 +63,15 @@ const HomeScreen = () => {
             },
           }}
         />
-        <stack.Screen
-          name="details"
-          component={MediaDetails}
+        <RootStack.Screen
+          name="modal"
+          component={ModalStackView}
           options={{
-            contentStyle: { backgroundColor: "transparent" },
             presentation: "modal",
             headerShown: false,
           }}
         />
-      </stack.Navigator>
+      </RootStack.Navigator>
     </NavigationContainer>
   );
 };

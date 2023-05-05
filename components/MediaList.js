@@ -8,6 +8,7 @@ import {
   View,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import ImageContainer from "./ImageContainer";
 
 export default function MediaList({
   data,
@@ -17,7 +18,7 @@ export default function MediaList({
   const navigation = useNavigation();
 
   function handlePress(itemID) {
-    navigation.navigate("details", {
+    navigation.navigate("modal", {
       contentID: itemID,
       contentType: "movie",
     });
@@ -33,21 +34,12 @@ export default function MediaList({
         contentContainerStyle={styles.flatList}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <Pressable
-            style={
-              tileSize === "small" ? styles.imgBoxSmall : styles.imgBoxLarge
-            }
-            onPress={() => handlePress(item.id)}
-          >
-            <Image
-              source={{
-                uri: `https://image.tmdb.org/t/p/w200/${item.poster_path}`,
-              }}
-              style={
-                tileSize === "small" ? styles.imageSmall : styles.imageLarge
-              }
-            />
-          </Pressable>
+          <ImageContainer
+            tileSize={tileSize}
+            handlePress={handlePress}
+            movieID={item.id}
+            posterPath={item.poster_path}
+          />
         )}
       />
     </View>
@@ -67,29 +59,5 @@ const styles = StyleSheet.create({
     marginBottom: 14,
     marginLeft: 16,
     color: "#fff",
-  },
-  imageSmall: {
-    resizeMode: "cover",
-    height: 154.5,
-    width: 103,
-    borderRadius: 4,
-  },
-  imgBoxSmall: {
-    marginRight: 7,
-    height: 161,
-    width: 103,
-    overflow: "hidden",
-  },
-  imageLarge: {
-    resizeMode: "cover",
-    height: 231.06,
-    width: 154.04,
-    borderRadius: 4,
-  },
-  imgBoxLarge: {
-    marginRight: 7,
-    height: 251,
-    width: 154.04,
-    overflow: "hidden",
   },
 });

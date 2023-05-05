@@ -1,9 +1,8 @@
 import React from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { Dimensions, ScrollView, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useHeaderHeight } from "@react-navigation/elements";
 import MediaList from "./MediaList";
-import NetflixLogo from "./../assets/NetflixLogo.svg";
 import {
   popularMovies,
   topratedMovies,
@@ -16,9 +15,10 @@ export default function HomeScreenLists({ navigation }) {
   const insets = useSafeAreaInsets();
   const headerHeight = useHeaderHeight();
   const paddingTop = headerHeight;
+  const { isFocused } = navigation;
 
   return (
-    <View style={[styles.screenContainer]}>
+    <View style={styles.screenContainer}>
       <ScrollView
         style={{ paddingTop: headerHeight }}
         showsVerticalScrollIndicator={false}
