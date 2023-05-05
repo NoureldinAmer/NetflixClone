@@ -15,15 +15,7 @@ import { Entypo } from "@expo/vector-icons";
 import { Ionicons } from "react-native-vector-icons";
 import { Feather } from "react-native-vector-icons";
 import { FontAwesome } from "react-native-vector-icons";
-
-const Icon = ({ name, size, color }) => {
-  return (
-    <View style={styles.iconContainer}>
-      <View style={styles.iconBackground} />
-      <AntDesign name={name} size={size} color={color} />
-    </View>
-  );
-};
+import VideoPlayerIcon from "./VideoPlayerIcon";
 
 const MediaDetails = ({ route, navigation }) => {
   const webViewRef = useRef(null);
@@ -59,7 +51,9 @@ const MediaDetails = ({ route, navigation }) => {
       <View style={{ height: 300, backgroundColor: "green", width: "100%" }}>
         <View style={styles.exitButton}>
           <Pressable onPress={closeModal}>
-            <Icon name="closecircle" size={24} color="#272526" />
+            <VideoPlayerIcon>
+              <AntDesign name="closecircle" size={24} color="#272526" />
+            </VideoPlayerIcon>
           </Pressable>
         </View>
         <WebView
@@ -255,18 +249,5 @@ const styles = StyleSheet.create({
     fontFamily: "netflix-light",
     fontSize: 13,
     color: "#BFBFBF",
-  },
-  iconContainer: {
-    position: "relative",
-    borderRadius: "50%",
-  },
-  iconBackground: {
-    width: 20,
-    height: 20,
-    borderRadius: 10,
-    backgroundColor: "white",
-    position: "absolute",
-    top: 2,
-    right: 2,
   },
 });
