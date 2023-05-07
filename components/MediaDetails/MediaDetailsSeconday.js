@@ -1,6 +1,6 @@
 import MediaRecommendations from "./MediaRecommendations";
 import { StyleSheet, View, Text, Pressable, ScrollView } from "react-native";
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { WebView } from "react-native-webview";
 import { AntDesign } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
@@ -8,6 +8,7 @@ import { Ionicons } from "react-native-vector-icons";
 import { Feather } from "react-native-vector-icons";
 import { FontAwesome } from "react-native-vector-icons";
 import VideoPlayerIcon from "./VideoPlayerIcon";
+import TabNavigation from "./TabNavigation";
 
 const MediaDetailsSecondary = ({ route, navigation }) => {
   const webViewRef = useRef(null);
@@ -143,7 +144,7 @@ const MediaDetailsSecondary = ({ route, navigation }) => {
             </View>
           </View>
           <Text>More Like This</Text>
-          <MediaRecommendations />
+          <TabNavigation />
         </View>
       </ScrollView>
     </View>

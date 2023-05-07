@@ -13,16 +13,16 @@ const ModalStack = createNativeStackNavigator();
 const ModalStackView = () => (
   <ModalStack.Navigator>
     <ModalStack.Screen
-      name="details"
+      name="detailsPrimaryScreen"
       component={MediaDetails}
       options={{
         contentStyle: { backgroundColor: "transparent" },
-        presentation: "modal",
+        presentation: "fullScreenModal",
         headerShown: false,
       }}
     />
     <ModalStack.Screen
-      name="detailsSecondary"
+      name="detailsSecondaryScreen"
       component={MediaDetailsSecondary}
       options={{
         contentStyle: { backgroundColor: "#000" },
@@ -47,7 +47,6 @@ const HomeScreen = () => {
             },
             statusBarTranslucent: true,
             contentStyle: { backgroundColor: "#000" },
-            headerLargeTitleShadowVisible: true,
             headerBlurEffect: "systemUltraThinMaterialDark",
             headerTransparent: true,
             headerTitleAlign: "left",

@@ -1,4 +1,4 @@
-import MediaRecommendations from "./MediaRecommendations";
+import TabNavigation from "./TabNavigation";
 import {
   StyleSheet,
   View,
@@ -7,7 +7,7 @@ import {
   ScrollView,
   FlatList,
 } from "react-native";
-import React, { Component, useRef } from "react";
+import React, { Component, useRef, useState } from "react";
 import { BlurView } from "expo-blur";
 import { WebView } from "react-native-webview";
 import { AntDesign } from "@expo/vector-icons";
@@ -19,11 +19,8 @@ import VideoPlayerIcon from "./VideoPlayerIcon";
 
 const MediaDetails = ({ route, navigation }) => {
   const webViewRef = useRef(null);
-  console.log;
 
   const handleNavigationStateChange = (navState) => {
-    console.log("Redirected URL:", navState.url);
-
     if (navState.url !== `https://www.2embed.to/embed/tmdb/movie?id=${25}`) {
       webViewRef.current?.reload();
       console.log("[RELOADING]");
@@ -45,6 +42,20 @@ const MediaDetails = ({ route, navigation }) => {
 
     webViewRef.current?.injectJavaScript(script);
   };
+
+  function SettingsScreen() {
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Text>Settings!</Text>
+      </View>
+    );
+  }
 
   return (
     <BlurView style={styles.container} intensity={100} tint="dark">
@@ -97,7 +108,6 @@ const MediaDetails = ({ route, navigation }) => {
               <Text style={styles.playButtonText}> Play</Text>
             </View>
           </Pressable>
-
           <Text style={[styles.text, styles.overview]}>
             Framed Polish pianist Wladyslaw Szpilman struggles to survive the
             onslaught of Nazi tyranny during World War II in this drama based on
@@ -137,8 +147,7 @@ const MediaDetails = ({ route, navigation }) => {
               </View>
             </View>
           </View>
-          <Text>More Like This</Text>
-          <MediaRecommendations />
+          <TabNavigation />
         </View>
       </ScrollView>
     </BlurView>
