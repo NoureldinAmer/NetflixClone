@@ -16,8 +16,9 @@ const ModalStackView = () => (
       name="detailsPrimaryScreen"
       component={MediaDetails}
       options={{
-        contentStyle: { backgroundColor: "transparent" },
-        presentation: "fullScreenModal",
+        contentStyle: {
+          backgroundColor: Platform.OS === "ios" ? "transparent" : "#000",
+        },
         headerShown: false,
       }}
     />
@@ -67,8 +68,9 @@ const HomeScreen = () => {
           component={ModalStackView}
           options={{
             contentStyle: { backgroundColor: "transparent" },
-            presentation: "modal",
+            presentation: Platform.OS === "ios" ? "modal" : "card",
             headerShown: false,
+            animation: Platform.OS === "android" ? "slide_from_right" : null,
           }}
         />
       </RootStack.Navigator>
