@@ -51,14 +51,14 @@ const MediaDetailsSecondary = ({ route, navigation }) => {
       <View style={{ height: 300, backgroundColor: "green", width: "100%" }}>
         <View style={styles.exitButton}>
           <Pressable onPress={handleCloseButton}>
-            <VideoPlayerIcon>
+            <VideoPlayerIcon iconSize={24}>
               <AntDesign name="closecircle" size={24} color="#272526" />
             </VideoPlayerIcon>
           </Pressable>
         </View>
         <View style={styles.backButton}>
           <Pressable onPress={HandleBackButton}>
-            <VideoPlayerIcon>
+            <VideoPlayerIcon iconSize={24}>
               <AntDesign name="leftcircle" size={24} color="black" />
             </VideoPlayerIcon>
           </Pressable>
