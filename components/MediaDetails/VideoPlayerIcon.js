@@ -1,9 +1,15 @@
 import { StyleSheet, View } from "react-native";
 import React from "react";
 
-export default VideoPlayerIcon = ({ children }) => {
+export default VideoPlayerIcon = ({ children, iconSize }) => {
+  iconContainerStyles = {
+    width: iconSize,
+    height: iconSize,
+    borderRadius: iconSize / 2,
+  };
+
   return (
-    <View style={styles.iconContainer}>
+    <View style={[styles.iconContainer, iconContainerStyles]}>
       <View style={styles.iconBackground} />
       {children}
     </View>
@@ -13,8 +19,7 @@ export default VideoPlayerIcon = ({ children }) => {
 const styles = StyleSheet.create({
   iconContainer: {
     position: "relative",
-    borderRadius: "50%",
-    backgroundColor: "red",
+    backgroundColor: "transparent",
   },
   iconBackground: {
     width: 20,
