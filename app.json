@@ -19,7 +19,14 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#000"
-      }
+      },
+      "intentFilters": [
+        {
+          "action": "android.intent.action.MAIN",
+          "category": "android.intent.category.LAUNCHER",
+          "launchMode": "singleTask"
+        }
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
