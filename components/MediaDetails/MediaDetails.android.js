@@ -61,22 +61,14 @@ const MediaDetails = ({ route, navigation }) => {
           </Pressable>
         </View>
         <WebView
-          scrollEnabled={false}
-          ref={webViewRef}
-          style={styles.WebViewContainer}
-          javaScriptEnabled={true}
-          startInLoadingState={true}
+          //ref={webViewRef}
+          androidHardwareAccelerationDisabled={false}
           source={{
             uri: `https://www.2embed.to/embed/tmdb/movie?id=${selectedMediaID}`,
           }}
-          originWhitelist={[
-            `https://www.2embed.to/embed/tmdb/movie?id=${selectedMediaID}`,
-          ]}
-          onNavigationStateChange={handleNavigationStateChange}
           allowsFullscreenVideo={true}
           injectedJavaScript={zoomInScript}
           scalesPageToFit={false}
-          mixedContentMode={"always"}
         />
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
