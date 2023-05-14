@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   FlatList,
   Image,
@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import ImageContainer from "./ImageContainer";
+import { MediaContext } from "../contexts/MediaContext";
 
 export default function MediaList({
   data,
@@ -16,8 +17,10 @@ export default function MediaList({
   tileSize = "small",
 }) {
   const navigation = useNavigation();
+  const { setSelectedMediaID } = useContext(MediaContext);
 
   function handlePress(itemID) {
+    setSelectedMediaID(itemID);
     navigation.navigate("modal", {
       contentID: itemID,
       contentType: "movie",

@@ -1,17 +1,26 @@
 import MediaDescription from "./MediaDescription";
 import TabNavigation from "./TabNavigation";
 import { StyleSheet, View, Text, Pressable, ScrollView } from "react-native";
-import React, { useRef } from "react";
+import React, { useRef, useContext, useEffect } from "react";
 import { BlurView } from "expo-blur";
 import { WebView } from "react-native-webview";
 import { AntDesign } from "@expo/vector-icons";
 import VideoPlayerIcon from "./VideoPlayerIcon";
+import { MediaContext } from "../../contexts/MediaContext";
 
 const MediaDetails = ({ route, navigation }) => {
   const webViewRef = useRef(null);
+  const { selectedMediaID } = useContext(MediaContext);
+
+  useEffect(() => {
+    console.log("id from context api is", selectedMediaID);
+  });
 
   const handleNavigationStateChange = (navState) => {
-    if (navState.url !== `https://www.2embed.to/embed/tmdb/movie?id=${25}`) {
+    if (
+      navState.url !==
+      `https://www.2embed.to/embed/tmdb/movie?id=${selectedMediaID}`
+    ) {
       webViewRef.current?.reload();
       console.log("[RELOADING]");
     }
@@ -66,7 +75,7 @@ const MediaDetails = ({ route, navigation }) => {
           startInLoadingState={true}
           source={{
             // uri: `https://www.2embed.to/embed/tmdb/movie?id=${route.params.contentID}`,
-            uri: `https://www.2embed.to/embed/tmdb/movie?id=25`,
+            uri: `https://www.2embed.to/embed/tmdb/movie?id=${selectedMediaID}`,
           }}
           onNavigationStateChange={handleNavigationStateChange}
         />
