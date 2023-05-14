@@ -21,6 +21,7 @@ const ModalStackView = () => (
           backgroundColor: Platform.OS === "ios" ? "transparent" : "#000",
         },
         headerShown: false,
+        freezeOnBlur: true,
       }}
     />
     <ModalStack.Screen

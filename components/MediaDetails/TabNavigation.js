@@ -6,7 +6,7 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 
 export default function TabNavigation() {
   const Tab = createMaterialTopTabNavigator();
-  const [childrenHeight, setChildrenHeight] = useState(0);
+  //const [childrenHeight, setChildrenHeight] = useState(0);
 
   return (
     <View
@@ -16,7 +16,7 @@ export default function TabNavigation() {
     >
       <Tab.Navigator
         style={{
-          height: childrenHeight + 150,
+          height: 720,
           paddingTop: 20,
         }}
         sceneContainerStyle={{
@@ -50,9 +50,9 @@ export default function TabNavigation() {
         <Tab.Screen
           name="mediaRecommendations"
           component={MediaRecommendations}
-          initialParams={{
-            setHeight: setChildrenHeight, //give navigator space to display entire media collection
-          }}
+          // initialParams={{
+          //   webViewRef: webViewRef, //give navigator space to display entire media collection
+          // }}
           options={{
             title: "More Like This",
           }}

@@ -19,10 +19,10 @@ export default function MediaRecommendations() {
   return (
     <View
       style={styles.mediaList}
-      onLayout={(event) => {
-        const { height } = event.nativeEvent.layout;
-        route.params.setHeight(height); //give navigator space to display entire media collection
-      }}
+      // onLayout={(event) => {
+      //   const { height } = event.nativeEvent.layout;
+      //   route.params.setHeight(height); //give navigator space to display entire media collection
+      // }}
     >
       {continueWatching.results.map((item) => {
         return (

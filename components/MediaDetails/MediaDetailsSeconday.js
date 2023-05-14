@@ -26,11 +26,13 @@ const MediaDetailsSecondary = ({ route, navigation }) => {
   };
 
   const handleCloseButton = () => {
+    webViewRef.current = null;
     navigation.popToTop();
     navigation.goBack(null);
   };
 
   const HandleBackButton = () => {
+    webViewRef.current = null;
     navigation.goBack();
   };
 

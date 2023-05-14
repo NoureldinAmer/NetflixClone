@@ -30,6 +30,7 @@ const MediaDetails = ({ route, navigation }) => {
   };
 
   const closeModal = () => {
+    webViewRef.current = null;
     navigation.goBack(null);
   };
 
@@ -61,8 +62,9 @@ const MediaDetails = ({ route, navigation }) => {
           </Pressable>
         </View>
         <WebView
-          //ref={webViewRef}
+          ref={webViewRef}
           androidHardwareAccelerationDisabled={false}
+          style={styles.WebViewContainer}
           source={{
             uri: `https://www.2embed.to/embed/tmdb/movie?id=${selectedMediaID}`,
           }}
