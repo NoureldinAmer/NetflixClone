@@ -74,7 +74,6 @@ const MediaDetails = ({ route, navigation }) => {
           domStorageEnabled={true}
           startInLoadingState={true}
           source={{
-            // uri: `https://www.2embed.to/embed/tmdb/movie?id=${route.params.contentID}`,
             uri: `https://www.2embed.to/embed/tmdb/movie?id=${selectedMediaID}`,
           }}
           onNavigationStateChange={handleNavigationStateChange}

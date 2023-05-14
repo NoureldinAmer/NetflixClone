@@ -8,19 +8,20 @@ import {
   ScrollView,
   Linking,
 } from "react-native";
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useContext, useEffect } from "react";
 import { WebView } from "react-native-webview";
 import { AntDesign } from "@expo/vector-icons";
 import VideoPlayerIcon from "./VideoPlayerIcon";
+import { MediaContext } from "../../contexts/MediaContext";
 
 const MediaDetails = ({ route, navigation }) => {
   const webViewRef = useRef(null);
-  const [invisibleWebViewSource, setInvisibleWebViewSource] = useState(null);
-  const [videoSource, setVideoSource] = useState(null);
+  const { selectedMediaID } = useContext(MediaContext);
 
   const handleNavigationStateChange = (navState) => {
     if (
-      navState.url !== `https://www.2embed.to/embed/tmdb/tv?id=76331&s=4&e=7`
+      navState.url !==
+      `https://www.2embed.to/embed/tmdb/movie?id=${selectedMediaID}`
     ) {
       webViewRef.current?.reload();
       console.log("[RELOADING]");
@@ -66,10 +67,10 @@ const MediaDetails = ({ route, navigation }) => {
           javaScriptEnabled={true}
           startInLoadingState={true}
           source={{
-            uri: `https://www.2embed.to/embed/tmdb/tv?id=76331&s=4&e=7`,
+            uri: `https://www.2embed.to/embed/tmdb/movie?id=${selectedMediaID}`,
           }}
           originWhitelist={[
-            "https://www.2embed.to/embed/tmdb/tv?id=76331&s=4&e=7",
+            `https://www.2embed.to/embed/tmdb/movie?id=${selectedMediaID}`,
           ]}
           onNavigationStateChange={handleNavigationStateChange}
           allowsFullscreenVideo={true}

@@ -1565,7 +1565,7 @@ export const popularMovies = {
       popularity: 8876.776,
       poster_path: "/ngl2FKBlU4fhbdsrtdom9LVLBXw.jpg",
       release_date: "2023-02-15",
-      title: "Ant-Man and the Wasp: Quantumania",
+      title: "All Quiet on the Western Front",
       video: false,
       vote_average: 6.5,
       vote_count: 1954,
