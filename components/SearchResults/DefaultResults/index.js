@@ -1,3 +1,4 @@
+import SearchScreenLoading from "./../../Skeleton/SearchScreenLoading";
 import React from "react";
 import { Ionicons } from "react-native-vector-icons";
 import {
@@ -8,10 +9,11 @@ import {
   ScrollView,
   Image,
   Keyboard,
-  Pressable,
 } from "react-native";
 import { TouchableRipple } from "react-native-paper";
 import { Platform } from "react-native";
+import ImageSkeleton from "../../Skeleton/ImageSkeleton";
+import TitleSkeleton from "../../Skeleton/TitleSkeleton";
 
 export default function DefaultResultsList({ data, handlePress }) {
   return (
@@ -40,7 +42,9 @@ export default function DefaultResultsList({ data, handlePress }) {
                     uri: `https://image.tmdb.org/t/p/w500/${item.backdrop_path}`,
                   }}
                 />
-                <Text style={styles.contentName}>{item.title}</Text>
+                <Text style={styles.contentName}>
+                  {item.media_type === "movie" ? item.title : item.name}
+                </Text>
               </View>
 
               <View style={styles.playIconContaier}>

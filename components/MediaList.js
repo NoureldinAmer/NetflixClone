@@ -3,6 +3,7 @@ import {
   FlatList,
   Image,
   Pressable,
+  ScrollView,
   StyleSheet,
   Text,
   View,
@@ -62,5 +63,6 @@ const styles = StyleSheet.create({
     marginBottom: 14,
     marginLeft: 16,
     color: "#fff",
+    width: "60%",
   },
 });

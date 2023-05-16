@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { Dimensions, ScrollView, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useHeaderHeight } from "@react-navigation/elements";
@@ -10,33 +10,38 @@ import {
   popularDocumentaries,
   continueWatching,
 } from "../data/MOCK_DATA";
+import { ApiContext } from "../contexts/ApiContext";
+import ActivityIndicator from "./ActivityIndicator";
+import HomeScreenLoading from "./Skeleton/HomeScreenLoading";
 
 export default function HomeScreenLists({ navigation }) {
   const insets = useSafeAreaInsets();
   const headerHeight = useHeaderHeight();
   const paddingTop = headerHeight;
   const { isFocused } = navigation;
+  const { loading, data, error } = useContext(ApiContext);
 
   return (
     <View style={styles.screenContainer}>
-      <ScrollView
-        style={{ paddingTop: headerHeight }}
-        showsVerticalScrollIndicator={false}
-        //contentInsetAdjustmentBehavior="automatic"
-      >
-        <MediaList data={popularMovies.results} title="Popular Movies" />
-        <MediaList data={topratedMovies.results} title="Top Rated Movies" />
-        <MediaList
-          data={continueWatching.results}
-          title="Continue Watching"
-          tileSize="large"
-        />
-        <MediaList data={myList.results} title="My List" />
-        <MediaList
-          data={popularDocumentaries.results}
-          title="Popular Documentaries"
-        />
-      </ScrollView>
+      {!loading ? (
+        <ScrollView
+          style={{ paddingTop: headerHeight }}
+          showsVerticalScrollIndicator={false}
+        >
+          {data?.homeScreen?.results.map((item, index) => {
+            return (
+              <MediaList
+                data={item.results}
+                title={item.list_name}
+                key={index}
+              />
+            );
+          })}
+        </ScrollView>
+      ) : (
+        //TODO => refactor
+        <HomeScreenLoading />
+      )}
     </View>
   );
 }
