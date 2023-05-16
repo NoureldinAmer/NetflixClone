@@ -3,6 +3,7 @@ import { StyleSheet, View } from "react-native";
 import Navigation from "./screens/Navigation";
 import { useFonts } from "expo-font";
 import AppLoading from "expo-app-loading";
+import { ApiProvider } from "./contexts/ApiContext";
 
 const App = () => {
   const [fontsLoaded] = useFonts({
@@ -17,9 +18,11 @@ const App = () => {
   }
 
   return (
-    <View style={styles.container}>
-      <Navigation />
-    </View>
+    <ApiProvider>
+      <View style={styles.container}>
+        <Navigation />
+      </View>
+    </ApiProvider>
   );
 };
 
