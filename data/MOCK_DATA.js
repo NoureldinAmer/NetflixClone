@@ -353,7 +353,7 @@ export const continueWatching = {
       adult: false,
       backdrop_path: "/eEF40Xk2twM3WjRNZftfo771gjv.jpg",
       genre_ids: [878, 12, 53, 28],
-      id: 700391,
+      id: 713704,
       original_language: "en",
       original_title: "65",
       overview:
@@ -1209,7 +1209,7 @@ export const topratedMovies = {
       adult: false,
       backdrop_path: "/tmU7GeKVybMWFButWEGl2M4GeiP.jpg",
       genre_ids: [18, 80],
-      id: 238,
+      id: 713704,
       original_language: "en",
       original_title: "The Godfather",
       overview:
