@@ -1,5 +1,5 @@
 import * as React from "react";
-import { StyleSheet, View } from "react-native";
+import { StatusBar, StyleSheet, View } from "react-native";
 import Navigation from "./screens/Navigation";
 import { useFonts } from "expo-font";
 import AppLoading from "expo-app-loading";
@@ -20,6 +20,7 @@ const App = () => {
   return (
     <ApiProvider>
       <View style={styles.container}>
+        <StatusBar backgroundColor="black" barStyle="light-content" />
         <Navigation />
       </View>
     </ApiProvider>
