@@ -1,27 +1,20 @@
-import MediaDescription from "./MediaDescription";
-import TabNavigation from "./TabNavigation";
-import {
-  StyleSheet,
-  View,
-  Text,
-  Pressable,
-  ScrollView,
-  Linking,
-} from "react-native";
-import React, { useRef, useState, useContext, useEffect } from "react";
+import MediaDescription from "../MediaDescription";
+import TabNavigation from "../TabNavigation";
+import { StyleSheet, View, Pressable, ScrollView } from "react-native";
+import React, { useRef, useContext } from "react";
 import { WebView } from "react-native-webview";
 import { AntDesign } from "@expo/vector-icons";
-import VideoPlayerIcon from "./VideoPlayerIcon";
-import { MediaContext } from "../../contexts/MediaContext";
+import VideoPlayerIcon from "../VideoPlayerIcon";
+import { MediaContext } from "../../../contexts/MediaContext";
 
-const MediaDetails = ({ route, navigation }) => {
+const MovieDetails = () => {
   const webViewRef = useRef(null);
   const { selectedMediaID } = useContext(MediaContext);
 
   const handleNavigationStateChange = (navState) => {
     if (
       navState.url !==
-      `https://www.2embed.to/embed/tmdb/movie?id=${selectedMediaID}`
+      `https://www.2embed.to/embed/tmdb/movie?id=${selectedMediaID.mediaID}`
     ) {
       webViewRef.current?.reload();
       console.log("[RELOADING]");
@@ -29,10 +22,10 @@ const MediaDetails = ({ route, navigation }) => {
     webViewRef.current.injectJavaScript(zoomInScript);
   };
 
-  const closeModal = () => {
-    webViewRef.current = null;
-    navigation.goBack(null);
-  };
+  // const closeModal = () => {
+  //   webViewRef.current = null;
+  //   navigation.goBack(null);
+  // };
 
   const zoomInScript = `
   document.body.style.zoom = '1.5';
@@ -83,7 +76,7 @@ const MediaDetails = ({ route, navigation }) => {
   );
 };
 
-export default MediaDetails;
+export default MovieDetails;
 
 const styles = StyleSheet.create({
   container: {
