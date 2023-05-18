@@ -4,7 +4,7 @@ import { View } from "react-native";
 
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 
-export default function TabNavigation() {
+export default function TabNavigation({ recommendations }) {
   const Tab = createMaterialTopTabNavigator();
   //const [childrenHeight, setChildrenHeight] = useState(0);
 
@@ -50,9 +50,9 @@ export default function TabNavigation() {
         <Tab.Screen
           name="mediaRecommendations"
           component={MediaRecommendations}
-          // initialParams={{
-          //   webViewRef: webViewRef, //give navigator space to display entire media collection
-          // }}
+          initialParams={{
+            recommendations: recommendations,
+          }}
           options={{
             title: "More Like This",
           }}

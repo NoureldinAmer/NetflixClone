@@ -3,10 +3,10 @@ import { Image, Platform, Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreenLists from "./../components/HomeScreenLists";
-import MediaDetails from "../components/MediaDetails/MediaDetails";
-import MediaDetailsSecondary from "../components/MediaDetails/MediaDetailsSeconday";
 import NetflixLogo from "./../assets/NetflixLogo.svg";
 import MediaContextProvider from "../contexts/MediaContext";
+import MediaDetails from "../components/MediaDetails";
+import MediaDetailsSecondary from "../components/MediaDetails/MediaDetailsSecondary/MediaDetailsSeconday";
 
 const RootStack = createNativeStackNavigator();
 const ModalStack = createNativeStackNavigator();

@@ -1,12 +1,18 @@
 import React, { createContext, useState } from "react";
 
 export const MediaContext = createContext({
-  selectedMediaID: 0,
+  selectedMedia: {
+    contentID: null,
+    contentType: null,
+  },
   setSelectedMediaID: (mediaID) => {},
 });
 
 const MediaContextProvider = ({ children }) => {
-  const [selectedMedia, setSelectedMedia] = useState(null);
+  const [selectedMedia, setSelectedMedia] = useState({
+    contentID: null,
+    contentType: null,
+  });
 
   function setSelectedMediaID(mediaID) {
     setSelectedMedia(mediaID);
@@ -15,7 +21,7 @@ const MediaContextProvider = ({ children }) => {
   return (
     <MediaContext.Provider
       value={{
-        selectedMediaID: selectedMedia,
+        selectedMedia,
         setSelectedMediaID,
       }}
     >

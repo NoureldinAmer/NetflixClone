@@ -23,7 +23,10 @@ const SearchResults = ({ navigation }) => {
   const { loading, data, error } = useContext(ApiContext);
 
   function handlePress(itemID) {
-    setSelectedMediaID(itemID);
+    setSelectedMediaID({
+      contentID: itemID,
+      contentType: "movie",
+    });
     navigation.navigate("modal", {
       contentID: itemID,
       contentType: "movie",

@@ -5,21 +5,27 @@ import { Ionicons } from "react-native-vector-icons";
 import { Feather } from "react-native-vector-icons";
 import { FontAwesome } from "react-native-vector-icons";
 
-function MediaDescription({ clickMiddle }) {
+function MediaDescription({ clickMiddle, movie }) {
   return (
     <>
       <Text style={[styles.title, styles.text]}>
-        All Quiet on the Western Front
+        {movie?.movieDetails?.title}
       </Text>
       <View style={styles.subtitleContainer}>
         <Text style={[styles.text, styles.subtitleText, styles.ratings]}>
           85% match
         </Text>
-        <Text style={[styles.text, styles.subtitleText]}>2022</Text>
+        <Text style={[styles.text, styles.subtitleText]}>
+          {movie?.movieDetails?.year}
+        </Text>
         <View style={styles.certification}>
-          <Text style={[styles.text, styles.certificationText]}>PG-13</Text>
+          <Text style={[styles.text, styles.certificationText]}>
+            {movie?.certification}
+          </Text>
         </View>
-        <Text style={[styles.text, styles.subtitleText]}>2h 28m</Text>
+        <Text style={[styles.text, styles.subtitleText]}>
+          {movie?.movieDetails?.runtime}
+        </Text>
       </View>
       <View style={styles.highLight}>
         <View style={styles.highLightIcon}>
@@ -34,9 +40,7 @@ function MediaDescription({ clickMiddle }) {
         </View>
       </Pressable>
       <Text style={[styles.text, styles.overview]}>
-        Framed Polish pianist Wladyslaw Szpilman struggles to survive the
-        onslaught of Nazi tyranny during World War II in this drama based on his
-        memoirs.
+        {movie?.movieDetails?.overview}
       </Text>
       <Text style={[styles.text, styles.cast]}>
         Cast: Dwayne Johnson, Ryan Reynolds, Gal Gadot... more {"\n"}

@@ -20,11 +20,14 @@ export default function MediaList({
   const navigation = useNavigation();
   const { setSelectedMediaID } = useContext(MediaContext);
 
-  function handlePress(itemID) {
-    setSelectedMediaID(itemID);
+  function handlePress(itemID, contentType) {
+    setSelectedMediaID({
+      contentID: itemID,
+      contentType: contentType,
+    });
     navigation.navigate("modal", {
       contentID: itemID,
-      contentType: "movie",
+      contentType: contentType,
     });
   }
 
@@ -42,6 +45,7 @@ export default function MediaList({
             tileSize={tileSize}
             handlePress={handlePress}
             movieID={item.id}
+            contentType={item.content_type}
             posterPath={item.poster_path}
           />
         )}

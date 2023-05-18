@@ -17,14 +17,8 @@ export default function MediaRecommendations() {
   console.log("route", route);
 
   return (
-    <View
-      style={styles.mediaList}
-      // onLayout={(event) => {
-      //   const { height } = event.nativeEvent.layout;
-      //   route.params.setHeight(height); //give navigator space to display entire media collection
-      // }}
-    >
-      {continueWatching.results.map((item) => {
+    <View style={styles.mediaList}>
+      {route.params.recommendations.map((item) => {
         return (
           <ImageContainer
             key={item.id}

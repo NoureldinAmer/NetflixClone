@@ -4,8 +4,6 @@ import SearchResults from "../components/SearchResults";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import MediaContextProvider from "../contexts/MediaContext";
 import { NavigationContainer } from "@react-navigation/native";
-import MediaDetailsSecondary from "../components/MediaDetails/MediaDetailsSeconday";
-import MediaDetails from "../components/MediaDetails/MediaDetails";
 
 const RootStack = createNativeStackNavigator();
 const ModalStack = createNativeStackNavigator();

@@ -27,11 +27,18 @@ const getBoxStyle = (tileSize) => {
   }
 };
 
-function ImageContainer({ tileSize, handlePress, posterPath, movieID, style }) {
+function ImageContainer({
+  tileSize,
+  handlePress,
+  posterPath,
+  movieID,
+  style,
+  contentType,
+}) {
   return (
     <Pressable
       style={[getBoxStyle(tileSize), style]}
-      onPress={() => handlePress(movieID)}
+      onPress={() => handlePress(movieID, contentType)}
     >
       <Image
         source={{
