@@ -18,7 +18,7 @@ export default function MediaRecommendations() {
 
   return (
     <View style={styles.mediaList}>
-      {route.params.recommendations.map((item) => {
+      {route.params.recommendations?.map((item) => {
         return (
           <ImageContainer
             key={item.id}

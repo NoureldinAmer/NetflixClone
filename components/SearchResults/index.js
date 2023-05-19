@@ -46,12 +46,12 @@ const SearchResults = ({ navigation }) => {
         handelReset={handleReset}
       />
       {!loading ? (
-        // <DefaultResultsList
-        //   data={data?.topSearches?.results}
-        //   handlePress={handlePress}
-        // />
-        <SearchScreenLoading />
+        <DefaultResultsList
+          data={data?.topSearches?.results}
+          handlePress={handlePress}
+        />
       ) : (
+        // <SearchScreenLoading />
         <SearchScreenLoading />
       )}
     </View>
