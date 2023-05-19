@@ -7,7 +7,7 @@ import {
   Image,
   Keyboard,
 } from "react-native";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { popularMovies } from "../../data/MOCK_DATA";
 import DefaultResultsList from "./DefaultResults";
@@ -21,6 +21,11 @@ const SearchResults = ({ navigation }) => {
   const insets = useSafeAreaInsets();
   const { setSelectedMediaID } = useContext(MediaContext);
   const { loading, data, error } = useContext(ApiContext);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleReset = () => {
+    setSearchQuery("");
+  };
 
   function handlePress(itemID) {
     setSelectedMediaID({
@@ -35,7 +40,11 @@ const SearchResults = ({ navigation }) => {
 
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
-      <SearchTextInput />
+      <SearchTextInput
+        value={searchQuery}
+        onChangeText={setSearchQuery}
+        handelReset={handleReset}
+      />
       {!loading ? (
         // <DefaultResultsList
         //   data={data?.topSearches?.results}
