@@ -6,8 +6,6 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 
 export default function TabNavigation({ recommendations }) {
   const Tab = createMaterialTopTabNavigator();
-  //const [childrenHeight, setChildrenHeight] = useState(0);
-
   return (
     <View
       style={{

@@ -14,10 +14,12 @@ import { WebView } from "react-native-webview";
 import { AntDesign } from "@expo/vector-icons";
 import VideoPlayerIcon from "../VideoPlayerIcon";
 import { MediaContext } from "../../../contexts/MediaContext";
+import { useNavigation } from "@react-navigation/native";
 
 const MovieDetails = ({ data, error, loading }) => {
   const webViewRef = useRef(null);
   const { selectedMedia } = useContext(MediaContext);
+  const navigation = useNavigation();
 
   const handleNavigationStateChange = (navState) => {
     if (
@@ -30,7 +32,7 @@ const MovieDetails = ({ data, error, loading }) => {
   };
 
   const closeModal = () => {
-    //navigation.goBack(null);
+    navigation.goBack(null);
   };
 
   const clickMiddle = () => {
@@ -87,7 +89,7 @@ const MovieDetails = ({ data, error, loading }) => {
           <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.detailsContainer}>
               <MediaDescription clickMiddle={clickMiddle} movie={data} />
-              <TabNavigation recommendations={data?.recommendations} />
+              <TabNavigation recommendations={data.recommendations} />
             </View>
           </ScrollView>
         </>

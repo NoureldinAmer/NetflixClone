@@ -32,10 +32,8 @@ const SearchResults = ({ navigation }) => {
       contentID: itemID,
       contentType: "movie",
     });
-    navigation.navigate("modal", {
-      contentID: itemID,
-      contentType: "movie",
-    });
+    navigation.navigate("modal");
+    //console.log(navigation);
   }
 
   return (

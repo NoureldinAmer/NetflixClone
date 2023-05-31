@@ -1,6 +1,5 @@
-import MediaRecommendations from "../MediaRecommendations";
 import { StyleSheet, View, Text, Pressable, ScrollView } from "react-native";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { WebView } from "react-native-webview";
 import { AntDesign } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
@@ -9,9 +8,42 @@ import { Feather } from "react-native-vector-icons";
 import { FontAwesome } from "react-native-vector-icons";
 import VideoPlayerIcon from "../VideoPlayerIcon";
 import TabNavigation from "../TabNavigation";
+import { API_URL } from "@env";
+import axios from "axios";
+import MediaRecommendations from "../MediaRecommendations";
 
 const MediaDetailsSecondary = ({ route, navigation }) => {
   const webViewRef = useRef(null);
+  const [mediaState, setMediaState] = useState({
+    loading: true,
+    error: null,
+    data: {},
+  });
+
+  useEffect(() => {
+    console.log("focus");
+    async function fetchData() {
+      try {
+        const response = await axios.get(
+          `${API_URL}/details/movie/${route.params.contentID}`
+        );
+        setMediaState({
+          loading: false,
+          error: false,
+          data: response.data.results,
+        });
+        //console.log(mediaState.data);
+      } catch (error) {
+        console.log(error);
+        setMediaState({
+          loading: false,
+          error: true,
+        });
+      }
+    }
+
+    fetchData();
+  }, []);
 
   const handleNavigationStateChange = (navState) => {
     console.log("Redirected URL:", navState.url);
@@ -145,8 +177,7 @@ const MediaDetailsSecondary = ({ route, navigation }) => {
               </View>
             </View>
           </View>
-          <Text>More Like This</Text>
-          <TabNavigation />
+          <TabNavigation recommendations={mediaState.data?.recommendations} />
         </View>
       </ScrollView>
     </View>
