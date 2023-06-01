@@ -25,6 +25,7 @@ const SearchTextInput = ({
         placeholderTextColor={"#7B7B7B"}
         onChangeText={onChangeText}
         value={value}
+        autoCapitalize="none"
       />
       {value && (
         <Pressable onPress={handelReset}>
