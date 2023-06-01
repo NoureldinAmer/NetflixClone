@@ -13,7 +13,7 @@ function MediaDescription({ clickMiddle, movie }) {
       </Text>
       <View style={styles.subtitleContainer}>
         <Text style={[styles.text, styles.subtitleText, styles.ratings]}>
-          85% match
+          {Math.ceil(movie?.movieDetails?.vote_average * 10)}% match
         </Text>
         <Text style={[styles.text, styles.subtitleText]}>
           {movie?.movieDetails?.year}
