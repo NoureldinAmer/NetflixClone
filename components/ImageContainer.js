@@ -1,5 +1,6 @@
-import React from "react";
-import { Image, Pressable, StyleSheet } from "react-native";
+import { BlurView } from "expo-blur";
+import React, { useState } from "react";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 
 const getImageStyle = (tileSize) => {
   switch (tileSize) {
@@ -34,18 +35,50 @@ function ImageContainer({
   movieID,
   style,
   contentType,
+  placeHolderText = "placeholder text",
 }) {
+  const [isImageLoading, setIsImageLoading] = useState(true);
+
   return (
     <Pressable
       style={[getBoxStyle(tileSize), style]}
       onPress={() => handlePress(movieID, contentType)}
     >
-      <Image
-        source={{
-          uri: `https://image.tmdb.org/t/p/w200/${posterPath}`,
-        }}
-        style={getImageStyle(tileSize)}
-      />
+      {posterPath ? (
+        <View style={{ flexDirection: "row" }}>
+          {isImageLoading && (
+            <View
+              style={[getImageStyle(tileSize), styles.placeHolderContainer]}
+              numberOfLines={5}
+              ellipsizeMode="tail"
+            >
+              <Text style={styles.placeHolderText}>{placeHolderText}</Text>
+            </View>
+          )}
+          <Image
+            source={{
+              uri: `https://image.tmdb.org/t/p/w200/${posterPath}`,
+            }}
+            style={getImageStyle(tileSize)}
+            onLoadStart={() => setIsImageLoading(true)}
+            onLoadEnd={() => setIsImageLoading(false)}
+            onError={() => setIsImageLoading(true)}
+          />
+        </View>
+      ) : (
+        <BlurView
+          style={[getImageStyle(tileSize), styles.placeHolderContainer]}
+          intensity={35}
+        >
+          <Text
+            style={styles.placeHolderText}
+            numberOfLines={5}
+            ellipsizeMode="tail"
+          >
+            {placeHolderText}
+          </Text>
+        </BlurView>
+      )}
     </Pressable>
   );
 }
@@ -86,6 +119,19 @@ const styles = StyleSheet.create({
     height: 251,
     width: 154.04,
     overflow: "hidden",
+  },
+  placeHolderContainer: {
+    overflow: "hidden",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  placeHolderText: {
+    textAlign: "center",
+    textAlignVertical: "center",
+    width: "72%",
+    color: "#fff",
+    fontFamily: "netflix-light",
+    fontSize: 14.5,
   },
 });
 

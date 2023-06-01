@@ -30,6 +30,9 @@ export default function MediaRecommendations() {
               marginRight: 0,
               marginBottom: 5,
             }}
+            placeHolderText={
+              item.media_type === "movie" ? item.title : item.name
+            }
           />
         );
       })}

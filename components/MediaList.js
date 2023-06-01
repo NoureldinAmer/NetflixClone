@@ -16,6 +16,9 @@ export default function MediaList({
   data,
   title = "List Title",
   tileSize = "small",
+  listStyle,
+  titleStyle,
+  contentContainerStyle,
 }) {
   const navigation = useNavigation();
   const { setSelectedMediaID } = useContext(MediaContext);
@@ -25,28 +28,28 @@ export default function MediaList({
       contentID: itemID,
       contentType: contentType,
     });
-    navigation.navigate("modal", {
-      contentID: itemID,
-      contentType: contentType,
-    });
+    navigation.navigate("modal");
   }
 
   return (
-    <View style={styles.listContainer}>
-      <Text style={styles.listTitle}>{title}</Text>
+    <View style={[styles.listContainer, listStyle]}>
+      <Text style={[styles.listTitle, titleStyle]}>{title}</Text>
       <FlatList
         horizontal
         showsHorizontalScrollIndicator={false}
         data={data}
-        contentContainerStyle={styles.flatList}
+        contentContainerStyle={[styles.flatList, contentContainerStyle]}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <ImageContainer
             tileSize={tileSize}
             handlePress={handlePress}
             movieID={item.id}
-            contentType={item.content_type}
+            contentType={item.media_type}
             posterPath={item.poster_path}
+            placeHolderText={
+              item.media_type === "movie" ? item.title : item.name
+            }
           />
         )}
       />
