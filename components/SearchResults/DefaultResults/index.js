@@ -65,7 +65,7 @@ export default function DefaultResultsList({ data, handlePress }) {
 const styles = StyleSheet.create({
   searchTitle: {
     color: "#fff",
-    fontSize: 24.75,
+    fontSize: 22,
     fontFamily: "netflix-medium",
     marginBottom: 12,
   },
