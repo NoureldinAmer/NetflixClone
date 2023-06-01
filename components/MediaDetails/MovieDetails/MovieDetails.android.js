@@ -1,20 +1,28 @@
 import MediaDescription from "../MediaDescription";
 import TabNavigation from "../TabNavigation";
-import { StyleSheet, View, Pressable, ScrollView } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Pressable,
+  ScrollView,
+  ActivityIndicator,
+} from "react-native";
 import React, { useRef, useContext } from "react";
 import { WebView } from "react-native-webview";
 import { AntDesign } from "@expo/vector-icons";
 import VideoPlayerIcon from "../VideoPlayerIcon";
 import { MediaContext } from "../../../contexts/MediaContext";
+import { useNavigation } from "@react-navigation/native";
 
-const MovieDetails = () => {
+const MovieDetails = ({ data, error, loading }) => {
   const webViewRef = useRef(null);
-  const { selectedMediaID } = useContext(MediaContext);
+  const { selectedMedia } = useContext(MediaContext);
+  const navigation = useNavigation();
 
   const handleNavigationStateChange = (navState) => {
     if (
       navState.url !==
-      `https://www.2embed.to/embed/tmdb/movie?id=${selectedMediaID.mediaID}`
+      `https://www.2embed.to/embed/tmdb/movie?id=${selectedMedia.contentID}`
     ) {
       webViewRef.current?.reload();
       console.log("[RELOADING]");
@@ -22,10 +30,10 @@ const MovieDetails = () => {
     webViewRef.current.injectJavaScript(zoomInScript);
   };
 
-  // const closeModal = () => {
-  //   webViewRef.current = null;
-  //   navigation.goBack(null);
-  // };
+  const closeModal = () => {
+    webViewRef.current = null;
+    navigation.goBack(null);
+  };
 
   const zoomInScript = `
   document.body.style.zoom = '1.5';
@@ -46,32 +54,40 @@ const MovieDetails = () => {
 
   return (
     <View style={styles.container}>
-      <View style={{ height: 300, width: "100%" }}>
-        <View style={styles.exitButton}>
-          <Pressable onPress={closeModal}>
-            <VideoPlayerIcon iconSize={24}>
-              <AntDesign name="closecircle" size={24} color="#272526" />
-            </VideoPlayerIcon>
-          </Pressable>
+      {!loading ? (
+        <>
+          <View style={{ height: 300, width: "100%" }}>
+            <View style={styles.exitButton}>
+              <Pressable onPress={closeModal}>
+                <VideoPlayerIcon iconSize={28}>
+                  <AntDesign name="closecircle" size={28} color="#272526" />
+                </VideoPlayerIcon>
+              </Pressable>
+            </View>
+            <WebView
+              ref={webViewRef}
+              androidHardwareAccelerationDisabled={false}
+              style={styles.WebViewContainer}
+              source={{
+                uri: `https://www.2embed.to/embed/tmdb/movie?id=${selectedMedia.contentID}`,
+              }}
+              allowsFullscreenVideo={true}
+              injectedJavaScript={zoomInScript}
+              scalesPageToFit={false}
+            />
+          </View>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <View style={styles.detailsContainer}>
+              <MediaDescription clickMiddle={clickMiddle} movie={data} />
+              <TabNavigation recommendations={data.recommendations} />
+            </View>
+          </ScrollView>
+        </>
+      ) : (
+        <View style={styles.activityIndicatorContainer}>
+          <ActivityIndicator size={"large"} color={"red"} />
         </View>
-        <WebView
-          ref={webViewRef}
-          androidHardwareAccelerationDisabled={false}
-          style={styles.WebViewContainer}
-          source={{
-            uri: `https://www.2embed.to/embed/tmdb/movie?id=${selectedMediaID}`,
-          }}
-          allowsFullscreenVideo={true}
-          injectedJavaScript={zoomInScript}
-          scalesPageToFit={false}
-        />
-      </View>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.detailsContainer}>
-          <MediaDescription clickMiddle={clickMiddle} />
-          <TabNavigation />
-        </View>
-      </ScrollView>
+      )}
     </View>
   );
 };
@@ -81,6 +97,11 @@ export default MovieDetails;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: "center",
+  },
+  activityIndicatorContainer: {
+    justifyContent: "center",
+    alignItems: "center",
   },
   detailsContainer: {
     padding: 10,
