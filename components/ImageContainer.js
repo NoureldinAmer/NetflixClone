@@ -10,6 +10,8 @@ const getImageStyle = (tileSize) => {
       return styles.imageMedium;
     case "large":
       return styles.imageLarge;
+    case "recommended":
+      return styles.imageRecommended;
     default:
       return styles.imageSmall; // Default to small size if tileSize is not specified or not recognized
   }
@@ -23,6 +25,8 @@ const getBoxStyle = (tileSize) => {
       return styles.imgBoxMedium;
     case "large":
       return styles.imgBoxLarge;
+    case "recommended":
+      return styles.imgBoxRecommended;
     default:
       return styles.imgBoxSmall; // Default to small size if tileSize is not specified or not recognized
   }
@@ -102,6 +106,12 @@ const styles = StyleSheet.create({
     width: 154.04,
     borderRadius: 4,
   },
+  imageRecommended: {
+    resizeMode: "cover",
+    height: 172.8,
+    width: 125,
+    borderRadius: 4,
+  },
   imgBoxSmall: {
     marginRight: 7,
     height: 161,
@@ -118,6 +128,12 @@ const styles = StyleSheet.create({
     marginRight: 7,
     height: 251,
     width: 154.04,
+    overflow: "hidden",
+  },
+  imgBoxRecommended: {
+    marginRight: 7,
+    height: 180,
+    width: 120,
     overflow: "hidden",
   },
   placeHolderContainer: {
