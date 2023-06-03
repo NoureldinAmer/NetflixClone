@@ -23,7 +23,7 @@ export default function MediaRecommendations() {
           <ImageContainer
             key={item.id}
             handlePress={handlePress}
-            tileSize={"medium"}
+            tileSize={"recommended"}
             movieID={item.id}
             posterPath={item.poster_path}
             style={{

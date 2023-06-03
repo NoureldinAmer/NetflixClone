@@ -12,12 +12,12 @@ export default function TabNavigation({ recommendations, episodes }) {
   return (
     <View
       style={{
-        paddingTop: 20,
+        paddingTop: 10,
       }}
     >
       <Tab.Navigator
         style={{
-          height: 720,
+          height: 720, //TODO => fix tab size height
           paddingTop: 20,
         }}
         sceneContainerStyle={{
@@ -27,7 +27,7 @@ export default function TabNavigation({ recommendations, episodes }) {
         screenOptions={{
           tabBarStyle: {
             backgroundColor: "transparent",
-            marginLeft: 10,
+            marginLeft: 0,
           },
           tabBarLabelStyle: {
             fontFamily: "netflix-bold",
@@ -53,7 +53,7 @@ export default function TabNavigation({ recommendations, episodes }) {
             name="mediaRecommendations1"
             component={Episodes}
             initialParams={{
-              episodes: episodes,
+              seasons: episodes,
             }}
             options={{
               title: "Episodes",

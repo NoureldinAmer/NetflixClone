@@ -89,12 +89,15 @@ const ShowDetails = ({ data, error, loading }) => {
               onNavigationStateChange={handleNavigationStateChange}
             />
           </View>
-          <ScrollView showsVerticalScrollIndicator={false}>
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            style={{ paddingHorizontal: 10 }}
+          >
             <View style={styles.detailsContainer}>
               <MediaDescription clickMiddle={clickMiddle} media={data} />
               <TabNavigation
                 recommendations={data.recommendations}
-                episodes={data.seasons[0]}
+                episodes={data.seasons}
               />
             </View>
           </ScrollView>
