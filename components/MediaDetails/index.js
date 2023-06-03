@@ -17,7 +17,7 @@ const MediaDetails = () => {
     async function fetchData() {
       try {
         const response = await axios.get(
-          `${API_URL}/details/movie/${selectedMedia.contentID}`
+          `${API_URL}/details/${selectedMedia.contentType}/${selectedMedia.contentID}`
         );
         setMediaState({
           loading: false,
@@ -38,7 +38,7 @@ const MediaDetails = () => {
   return selectedMedia.contentType === "movie" ? (
     <MovieDetails {...mediaState} />
   ) : (
-    <></>
+    <ShowDetails {...mediaState} />
   );
 };
 
