@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import MediaRecommendations from "./MediaRecommendations";
+import Episodes from "./Episodes";
+import { MediaContext } from "../../contexts/MediaContext";
 import { View } from "react-native";
 
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 
-export default function TabNavigation({ recommendations }) {
+export default function TabNavigation({ recommendations, episodes }) {
+  const { selectedMedia } = useContext(MediaContext);
   const Tab = createMaterialTopTabNavigator();
   return (
     <View
@@ -45,6 +48,18 @@ export default function TabNavigation({ recommendations }) {
           tabBarGap: 20,
         }}
       >
+        {selectedMedia.contentType === "tv" && (
+          <Tab.Screen
+            name="mediaRecommendations1"
+            component={Episodes}
+            initialParams={{
+              episodes: episodes,
+            }}
+            options={{
+              title: "Episodes",
+            }}
+          />
+        )}
         <Tab.Screen
           name="mediaRecommendations"
           component={MediaRecommendations}

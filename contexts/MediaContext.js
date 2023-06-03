@@ -5,7 +5,12 @@ export const MediaContext = createContext({
     contentID: null,
     contentType: null,
   },
+  episodeDetails: {
+    seasonNumber: null,
+    episodeNumber: null,
+  },
   setSelectedMediaID: (mediaID) => {},
+  setEpisode: (seasonNumber, episodeNumber) => {},
 });
 
 const MediaContextProvider = ({ children }) => {
@@ -13,6 +18,19 @@ const MediaContextProvider = ({ children }) => {
     contentID: null,
     contentType: null,
   });
+
+  const [episodeDetails, setEpisodeDetails] = useState({
+    seasonNumber: null,
+    episodeNumber: null,
+  });
+
+  function setEpisode(seasonNumber, episodeNumber) {
+    setEpisodeDetails({
+      seasonNumber: seasonNumber,
+      episodeNumber: episodeNumber,
+    });
+    console.log(episodeDetails);
+  }
 
   function setSelectedMediaID(mediaID) {
     setSelectedMedia(mediaID);
@@ -23,6 +41,8 @@ const MediaContextProvider = ({ children }) => {
       value={{
         selectedMedia,
         setSelectedMediaID,
+        setEpisode,
+        episodeDetails,
       }}
     >
       {children}
