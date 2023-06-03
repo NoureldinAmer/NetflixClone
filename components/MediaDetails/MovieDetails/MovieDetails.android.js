@@ -78,7 +78,7 @@ const MovieDetails = ({ data, error, loading }) => {
           </View>
           <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.detailsContainer}>
-              <MediaDescription clickMiddle={clickMiddle} movie={data} />
+              <MediaDescription clickMiddle={clickMiddle} media={data} />
               <TabNavigation recommendations={data.recommendations} />
             </View>
           </ScrollView>

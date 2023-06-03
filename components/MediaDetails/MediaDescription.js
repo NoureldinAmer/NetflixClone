@@ -1,31 +1,39 @@
-import React from "react";
+import React, { useContext } from "react";
 import { StyleSheet, View, Text, Pressable } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 import { Ionicons } from "react-native-vector-icons";
 import { Feather } from "react-native-vector-icons";
 import { FontAwesome } from "react-native-vector-icons";
+import { MediaContext } from "../../contexts/MediaContext";
 
-function MediaDescription({ clickMiddle, movie }) {
+function MediaDescription({ clickMiddle, media }) {
+  const { selectedMedia } = useContext(MediaContext);
+
   return (
     <>
       <Text style={[styles.title, styles.text]}>
-        {movie?.movieDetails?.title}
+        {media?.mediaDetails?.title}
       </Text>
       <View style={styles.subtitleContainer}>
         <Text style={[styles.text, styles.subtitleText, styles.ratings]}>
-          {Math.ceil(movie?.movieDetails?.vote_average * 10)}% match
+          {Math.ceil(media?.mediaDetails?.vote_average * 10)}% match
         </Text>
         <Text style={[styles.text, styles.subtitleText]}>
-          {movie?.movieDetails?.year}
+          {media?.mediaDetails?.year}
         </Text>
         <View style={styles.certification}>
           <Text style={[styles.text, styles.certificationText]}>
-            {movie?.certification}
+            {media?.certification}
           </Text>
         </View>
-        <Text style={[styles.text, styles.subtitleText]}>
-          {movie?.movieDetails?.runtime}
-        </Text>
+        {selectedMedia.contentType === "movie" && (
+          <Text style={[styles.text, styles.subtitleText]}>
+            {media?.mediaDetails?.runtime}
+          </Text>
+        )}
+        {/* <Text style={[styles.text, styles.subtitleText]}>
+          {media?.mediaDetails?.runtime}
+        </Text> */}
       </View>
       <View style={styles.highLight}>
         <View style={styles.highLightIcon}>
@@ -40,7 +48,7 @@ function MediaDescription({ clickMiddle, movie }) {
         </View>
       </Pressable>
       <Text style={[styles.text, styles.overview]}>
-        {movie?.movieDetails?.overview}
+        {media?.mediaDetails?.overview}
       </Text>
       <Text style={[styles.text, styles.cast]}>
         Cast: Dwayne Johnson, Ryan Reynolds, Gal Gadot... more {"\n"}
