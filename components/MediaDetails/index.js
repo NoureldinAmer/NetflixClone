@@ -4,6 +4,7 @@ import axios from "axios";
 import { API_URL } from "@env";
 import MovieDetails from "./MovieDetails/MovieDetails";
 import { MediaContext } from "../../contexts/MediaContext";
+import ShowDetails from "./ShowDetails.js/ShowDetails";
 
 const MediaDetails = () => {
   const [mediaState, setMediaState] = useState({
@@ -23,6 +24,7 @@ const MediaDetails = () => {
           loading: false,
           error: false,
           data: response.data.results,
+          //data,
         });
       } catch (error) {
         setMediaState({
