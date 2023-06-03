@@ -14,6 +14,9 @@ import { BlurView } from "expo-blur";
 import { Ionicons } from "@expo/vector-icons";
 import { TouchableRipple } from "react-native-paper";
 import { useRoute } from "@react-navigation/native";
+import SeasonsModal from "./SeasonsModal";
+import EpisodeDetails from "./EpisodeDetails";
+import { MaterialIcons } from "@expo/vector-icons";
 
 const data = {
   _id: "52595fb3760ee346619586ed",
@@ -84,86 +87,42 @@ const Episodes = ({ setShowUrl }) => {
     setEpisode(seasonNumber, episodeNumber);
   }
 
-  // const [showURL, setShowURL] = useState({
-  //   season: 1,
-  //   episode: 1,
-  // });
-
   return (
     <View>
-      <Modal
-        animationType="fade"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(false);
-        }}
+      <SeasonsModal
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        numberOfSeasons={route.params.seasons.length}
+        setCurrentSeason={setCurrentSeason}
+        currentSeason={currentSeason}
+      />
+      <Pressable
+        onPress={() => setModalVisible(true)}
+        style={styles.seasonIndicatorContainer}
       >
-        <BlurView
-          style={styles.modalContainer}
-          tint="dark"
-          intensity={Platform.OS === "ios" ? 65 : 119}
-        >
-          <View style={styles.modalView}>
-            <View style={styles.textContainer}>
-              <Text style={styles.season}>Season 1</Text>
-              <Text style={styles.season}>Season 1</Text>
-              <Text style={styles.season}>Season 1</Text>
-              <Text style={styles.season}>Season 1</Text>
-              <Text style={styles.season}>Season 1</Text>
-              <Text style={styles.season}>Season 1</Text>
-              <Text style={styles.season}>Season 1</Text>
-            </View>
-
-            <Pressable
-              style={styles.exit}
-              onPress={() => setModalVisible(false)}
-            >
-              <Ionicons name="md-close-circle" size={65} color="white" />
-            </Pressable>
-          </View>
-        </BlurView>
-      </Modal>
-      <Pressable onPress={() => setModalVisible(true)}>
         <Text style={styles.seasonButton}>Season {currentSeason}</Text>
+        <MaterialIcons name="keyboard-arrow-down" size={21} color="#AFAAA4" />
       </Pressable>
       <View style={styles.episodesContainer}>
-        {route.params.episodes.episodes?.map((item, index) => {
-          return (
-            <TouchableRipple
-              style={styles.episodeRippleContainer}
-              onPress={() =>
-                handlePress(item.season_number, item.episode_number)
-              }
-              rippleColor={
-                Platform.OS === "android"
-                  ? "rgba(255, 255, 255, .20)"
-                  : "rgba(0, 0, 0, .12)"
-              }
-            >
-              <View style={styles.episodeContainer}>
-                <View style={styles.details}>
-                  <Image
-                    style={styles.image}
-                    source={{
-                      uri: `https://image.tmdb.org/t/p/w500/${item.still_path}`,
-                    }}
-                  />
-                  <View style={styles.name}>
-                    <Text style={styles.episodeName}>{`${index + 1}. ${
-                      item.name
-                    }`}</Text>
-                    <Text style={styles.runtime}>{item.runtime}m</Text>
-                  </View>
-                </View>
-
-                <View style={styles.overViewContaier}>
-                  <Text style={styles.overview}>{item.overview}</Text>
-                </View>
-              </View>
-            </TouchableRipple>
-          );
-        })}
+        {route.params.seasons[currentSeason - 1].episodes?.map(
+          (item, index) => {
+            return (
+              <TouchableRipple
+                style={styles.episodeRippleContainer}
+                onPress={() =>
+                  handlePress(item.season_number, item.episode_number)
+                }
+                rippleColor={
+                  Platform.OS === "android"
+                    ? "rgba(255, 255, 255, .20)"
+                    : "rgba(0, 0, 0, .12)"
+                }
+              >
+                <EpisodeDetails index={index} episode={item} />
+              </TouchableRipple>
+            );
+          }
+        )}
       </View>
     </View>
   );
@@ -173,24 +132,23 @@ export default Episodes;
 
 const styles = StyleSheet.create({
   seasonButton: {
-    color: "#fff",
-    fontFamily: "netflix-light",
+    color: "#AFAAA4",
+    fontSize: 14,
+    fontFamily: "netflix-regular",
   },
   season: {
     color: "#fff",
     fontFamily: "netflix-regular",
     fontSize: 20,
   },
-
-  modalContainer: {
-    flex: 1,
-    justifyContent: "center",
+  seasonIndicatorContainer: {
+    flexDirection: "row",
+    gap: 7,
     alignItems: "center",
-    opacity: 1,
   },
+
   modalView: {
     flex: 1,
-
     justifyContent: "center",
     alignItems: "center",
   },
@@ -219,7 +177,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   episodesContainer: {
-    gap: 34,
+    gap: 11,
   },
   name: {
     paddingHorizontal: 15,
