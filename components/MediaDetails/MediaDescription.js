@@ -27,8 +27,18 @@ function MediaDescription({ clickMiddle, media }) {
           </Text>
         </View>
         {selectedMedia.contentType === "movie" && (
-          <Text style={[styles.text, styles.subtitleText]}>
+          <Text style={[styles.text, styles.subtitleText, styles.runtime]}>
             {media?.mediaDetails?.runtime}
+          </Text>
+        )}
+        {selectedMedia.contentType === "tv" && (
+          <Text
+            style={[styles.text, styles.subtitleText, styles.seasonsNumber]}
+          >
+            {media?.mediaDetails?.number_of_seasons}{" "}
+            {media?.mediaDetails?.number_of_seasons === 1
+              ? "season"
+              : "seasons"}
           </Text>
         )}
         {/* <Text style={[styles.text, styles.subtitleText]}>
@@ -101,6 +111,14 @@ const styles = StyleSheet.create({
   subtitleText: {
     fontFamily: "netflix-regular",
     fontSize: 15,
+  },
+  runtime: {
+    marginLeft: 6,
+    color: "#AFAAA4",
+  },
+  seasonsNumber: {
+    marginLeft: 6,
+    color: "#AFAAA4",
   },
   ratings: {
     color: "#43C864",

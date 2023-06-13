@@ -38,7 +38,7 @@ export default function SeasonsModal({
             style={styles.seasonsContainer}
             showsVerticalScrollIndicator={false}
             alwaysBounceVertical={false}
-            contentContainerStyle={{ marginTop: 50 }}
+            contentContainerStyle={{ marginTop: 75, paddingBottom: 80 }}
           >
             {[...Array(numberOfSeasons)].map((_, index) => (
               <Pressable
@@ -100,11 +100,12 @@ const styles = StyleSheet.create({
   },
   seasonsContainer: {
     marginBottom: 120,
+    //backgroundColor: "red",
 
     maxHeight: "90%",
   },
   textContainer: {
-    marginTop: 25,
+    marginBottom: 25,
   },
   exit: {
     flex: 0,

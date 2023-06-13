@@ -21,7 +21,7 @@ const MediaDetailsSecondary = ({ route, navigation }) => {
   });
 
   useEffect(() => {
-    console.log("focus");
+    //console.log("focus");
     async function fetchData() {
       try {
         const response = await axios.get(
@@ -34,7 +34,7 @@ const MediaDetailsSecondary = ({ route, navigation }) => {
         });
         //console.log(mediaState.data);
       } catch (error) {
-        console.log(error);
+        //console.log(error);
         setMediaState({
           loading: false,
           error: true,
@@ -46,14 +46,14 @@ const MediaDetailsSecondary = ({ route, navigation }) => {
   }, []);
 
   const handleNavigationStateChange = (navState) => {
-    console.log("Redirected URL:", navState.url);
+    //console.log("Redirected URL:", navState.url);
 
     if (
       navState.url !==
       `https://www.2embed.to/embed/tmdb/movie?id=${route.params.contentID}`
     ) {
       webViewRef.current?.reload();
-      console.log("[RELOADING]");
+      //console.log("[RELOADING]");
     }
   };
 

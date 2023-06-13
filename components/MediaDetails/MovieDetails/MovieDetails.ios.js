@@ -15,10 +15,11 @@ import { AntDesign } from "@expo/vector-icons";
 import VideoPlayerIcon from "../VideoPlayerIcon";
 import { MediaContext } from "../../../contexts/MediaContext";
 import { useNavigation } from "@react-navigation/native";
+import { addMedia } from "../../../util/database";
 
 const MovieDetails = ({ data, error, loading }) => {
   const webViewRef = useRef(null);
-  const { selectedMedia } = useContext(MediaContext);
+  const { selectedMedia, startTimer, stopTimer } = useContext(MediaContext);
   const navigation = useNavigation();
 
   const handleNavigationStateChange = (navState) => {
@@ -27,14 +28,21 @@ const MovieDetails = ({ data, error, loading }) => {
       `https://www.2embed.to/embed/tmdb/movie?id=${selectedMedia.contentID}`
     ) {
       webViewRef.current?.reload();
-      console.log("[RELOADING]");
+      //console.log("[RELOADING]");
     }
   };
 
   const closeModal = () => {
+    try {
+      stopTimer();
+    } catch (error) {
+      console.log(error);
+    }
+
     navigation.goBack(null);
   };
 
+  //TODO rename click middle
   const clickMiddle = () => {
     const script = `
       (function() {
@@ -45,6 +53,9 @@ const MovieDetails = ({ data, error, loading }) => {
       })();`;
 
     webViewRef.current?.injectJavaScript(script);
+    //addMedia(selectedMedia);
+    startTimer();
+    addMedia(selectedMedia);
   };
 
   function SettingsScreen() {
@@ -86,12 +97,13 @@ const MovieDetails = ({ data, error, loading }) => {
               onNavigationStateChange={handleNavigationStateChange}
             />
           </View>
-          <ScrollView showsVerticalScrollIndicator={false}>
-            <View style={styles.detailsContainer}>
-              <MediaDescription clickMiddle={clickMiddle} media={data} />
-              <TabNavigation recommendations={data.recommendations} />
-            </View>
-          </ScrollView>
+          {/* <ScrollView showsVerticalScrollIndicator={false}> */}
+          <View style={styles.detailsContainer}>
+            {/* //TODO rename click middle */}
+            <MediaDescription clickMiddle={clickMiddle} media={data} />
+            <TabNavigation recommendations={data.recommendations} />
+          </View>
+          {/* </ScrollView> */}
         </>
       ) : (
         <View style={styles.activityIndicatorContainer}>

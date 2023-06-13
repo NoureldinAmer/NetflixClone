@@ -8,10 +8,9 @@ import {
   Text,
   View,
 } from "react-native";
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import { getWatchedEpisodes } from "../../../util/database";
 import { MediaContext } from "../../../contexts/MediaContext";
-import { BlurView } from "expo-blur";
-import { Ionicons } from "@expo/vector-icons";
 import { TouchableRipple } from "react-native-paper";
 import { useRoute } from "@react-navigation/native";
 import SeasonsModal from "./SeasonsModal";
@@ -79,16 +78,29 @@ const data = {
 const Episodes = ({ setShowUrl }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [currentSeason, setCurrentSeason] = useState(1);
-  const { setEpisode } = useContext(MediaContext);
+  const [watchedEpisodes, setWatchedEpisodes] = useState([]);
+  const { setEpisode, setSelectedMediaRuntime, selectedMedia } =
+    useContext(MediaContext);
   const route = useRoute();
 
-  function handlePress(seasonNumber, episodeNumber) {
-    console.log(seasonNumber, episodeNumber);
+  function handlePress(seasonNumber, episodeNumber, runtime) {
+    //console.log(seasonNumber, episodeNumber);
     setEpisode(seasonNumber, episodeNumber);
+    setSelectedMediaRuntime(runtime);
   }
 
+  useEffect(() => {
+    async function fetchWatchedEpisodes() {
+      const results = await getWatchedEpisodes(selectedMedia.contentID);
+      console.log(results);
+      setWatchedEpisodes(results);
+    }
+
+    fetchWatchedEpisodes();
+  }, []);
+
   return (
-    <View>
+    <ScrollView>
       <SeasonsModal
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
@@ -106,25 +118,37 @@ const Episodes = ({ setShowUrl }) => {
       <View style={styles.episodesContainer}>
         {route.params.seasons[currentSeason - 1].episodes?.map(
           (item, index) => {
+            const airDate = new Date(item.air_date);
+            const todayDate = new Date();
             return (
-              <TouchableRipple
-                style={styles.episodeRippleContainer}
-                onPress={() =>
-                  handlePress(item.season_number, item.episode_number)
-                }
-                rippleColor={
-                  Platform.OS === "android"
-                    ? "rgba(255, 255, 255, .20)"
-                    : "rgba(0, 0, 0, .12)"
-                }
-              >
-                <EpisodeDetails index={index} episode={item} />
-              </TouchableRipple>
+              airDate <= todayDate && (
+                <TouchableRipple
+                  style={styles.episodeRippleContainer}
+                  onPress={() =>
+                    handlePress(
+                      item.season_number,
+                      item.episode_number,
+                      item.runtime
+                    )
+                  }
+                  rippleColor={
+                    Platform.OS === "android"
+                      ? "rgba(255, 255, 255, .20)"
+                      : "rgba(0, 0, 0, .12)"
+                  }
+                >
+                  <EpisodeDetails
+                    index={index}
+                    episode={item}
+                    watchedEpisodes={watchedEpisodes}
+                  />
+                </TouchableRipple>
+              )
             );
           }
         )}
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

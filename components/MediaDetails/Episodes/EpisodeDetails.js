@@ -1,24 +1,21 @@
-import {
-  Image,
-  Modal,
-  Platform,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import React from "react";
+import EpisodeImageContainer from "../../ImageContainer/EpisodeImageContainer";
 
-export default function EpisodeDetails({ index, episode }) {
+export default function EpisodeDetails({ index, episode, watchedEpisodes }) {
+  const matchedEpisode = watchedEpisodes.find(
+    (watchedEpisode) =>
+      watchedEpisode.contentID === episode.contentID &&
+      watchedEpisode.seasonNumber === episode.season_number &&
+      watchedEpisode.episodeNumber === episode.episode_number
+  );
+
   return (
     <View style={styles.episodeContainer}>
       <View style={styles.details}>
-        <Image
-          style={styles.image}
-          source={{
-            uri: `https://image.tmdb.org/t/p/w500/${episode.still_path}`,
-          }}
+        <EpisodeImageContainer
+          episode={episode}
+          progress={matchedEpisode?.progress}
         />
         <View style={styles.name}>
           <Text style={styles.episodeName}>{`${index + 1}. ${
@@ -65,12 +62,6 @@ const styles = StyleSheet.create({
   },
   episodeContainer: {
     gap: 10.5,
-  },
-  image: {
-    width: 145,
-    height: 85,
-    resizeMode: "cover",
-    borderRadius: 4,
   },
   details: {
     flexDirection: "row",

@@ -64,7 +64,7 @@ const SearchResults = ({ navigation }) => {
         setToggleSearch(true);
       }
       try {
-        console.log("search query is", query);
+        //("search query is", query);
         const response = await axios.get(
           `${API_URL}/search?q=${encodeURIComponent(query)}`
         );

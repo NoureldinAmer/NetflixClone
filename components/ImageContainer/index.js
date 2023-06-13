@@ -40,13 +40,16 @@ function ImageContainer({
   style,
   contentType,
   placeHolderText = "placeholder text",
+  progress,
 }) {
   const [isImageLoading, setIsImageLoading] = useState(true);
 
   return (
     <Pressable
       style={[getBoxStyle(tileSize), style]}
-      onPress={() => handlePress(movieID, contentType)}
+      onPress={() =>
+        handlePress(movieID, contentType, posterPath, placeHolderText)
+      }
     >
       {posterPath ? (
         <View style={{ flexDirection: "row" }}>
@@ -68,6 +71,11 @@ function ImageContainer({
             onLoadEnd={() => setIsImageLoading(false)}
             onError={() => setIsImageLoading(true)}
           />
+          {progress > 0 && (
+            <View style={styles.progressContainer}>
+              <View style={[styles.progress, { width: `${progress}%` }]} />
+            </View>
+          )}
         </View>
       ) : (
         <BlurView
@@ -81,6 +89,11 @@ function ImageContainer({
           >
             {placeHolderText}
           </Text>
+          {progress > 0 && (
+            <View style={styles.progressContainer}>
+              <View style={[styles.progress, { width: `${progress}%` }]} />
+            </View>
+          )}
         </BlurView>
       )}
     </Pressable>
@@ -109,7 +122,7 @@ const styles = StyleSheet.create({
   imageRecommended: {
     resizeMode: "cover",
     height: 172.8,
-    width: 125,
+    width: 120,
     borderRadius: 4,
   },
   imgBoxSmall: {
@@ -117,6 +130,7 @@ const styles = StyleSheet.create({
     height: 161,
     width: 103,
     overflow: "hidden",
+    borderRadius: 4,
   },
   imgBoxMedium: {
     marginRight: 7,
@@ -148,6 +162,21 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontFamily: "netflix-light",
     fontSize: 14.5,
+  },
+  progressContainer: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    height: "2%",
+    backgroundColor: "#9A9A9A",
+    width: "100%",
+    borderBottomLeftRadius: 40,
+    borderBottomRightRadius: 40,
+    overflow: "hidden",
+  },
+  progress: {
+    height: "100%",
+    backgroundColor: "#C2001A",
   },
 });
 

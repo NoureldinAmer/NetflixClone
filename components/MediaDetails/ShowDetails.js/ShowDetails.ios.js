@@ -15,10 +15,12 @@ import { AntDesign } from "@expo/vector-icons";
 import VideoPlayerIcon from "../VideoPlayerIcon";
 import { MediaContext } from "../../../contexts/MediaContext";
 import { useNavigation } from "@react-navigation/native";
+import { addMedia } from "../../../util/database";
 
 const ShowDetails = ({ data, error, loading }) => {
   const webViewRef = useRef(null);
-  const { selectedMedia, episodeDetails } = useContext(MediaContext);
+  const { selectedMedia, episodeDetails, startTimer, stopTimer } =
+    useContext(MediaContext);
   const navigation = useNavigation();
 
   const handleNavigationStateChange = (navState) => {
@@ -27,11 +29,12 @@ const ShowDetails = ({ data, error, loading }) => {
       `https://www.2embed.to/embed/tmdb/tv?id=${selectedMedia.contentID}&s=${episodeDetails.seasonNumber}&e=${episodeDetails.episodeNumber}`
     ) {
       webViewRef.current?.reload();
-      console.log("[RELOADING]");
+      //("[RELOADING]");
     }
   };
 
   const closeModal = () => {
+    stopTimer();
     navigation.goBack(null);
   };
 
@@ -43,11 +46,14 @@ const ShowDetails = ({ data, error, loading }) => {
           element.click();
         }
       })();`;
+    console.log("media id is", selectedMedia);
+    startTimer();
+    addMedia(selectedMedia);
 
     webViewRef.current?.injectJavaScript(script);
-    console.log(
-      `https://www.2embed.to/embed/tmdb/tv?id=${selectedMedia.contentID}&s=${episodeDetails.seasonNumber}&e=${episodeDetails.episodeNumber}`
-    );
+    // console.log(
+    //   `https://www.2embed.to/embed/tmdb/tv?id=${selectedMedia.contentID}&s=${episodeDetails.seasonNumber}&e=${episodeDetails.episodeNumber}`
+    // );
   };
 
   function SettingsScreen() {

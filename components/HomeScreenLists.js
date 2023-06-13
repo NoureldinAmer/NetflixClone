@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Dimensions,
   ScrollView,
@@ -19,6 +19,7 @@ import {
 import { ApiContext } from "../contexts/ApiContext";
 import ActivityIndicator from "./ActivityIndicator";
 import HomeScreenLoading from "./Skeleton/HomeScreenLoading";
+import { getWatchList } from "../util/database";
 
 export default function HomeScreenLists({ navigation }) {
   const insets = useSafeAreaInsets();
@@ -26,6 +27,20 @@ export default function HomeScreenLists({ navigation }) {
   const paddingTop = headerHeight;
   const { isFocused } = navigation;
   const { loading, data, error } = useContext(ApiContext);
+  const [watchHistoy, setWatchHistory] = useState([]);
+
+  useEffect(() => {
+    const getLocalLists = async () => {
+      try {
+        const results = await getWatchList();
+        console.log("db history", results);
+        setWatchHistory(results);
+      } catch (error) {
+        console.log("err: ", error);
+      }
+    };
+    getLocalLists();
+  }, []);
 
   return (
     <>
@@ -35,6 +50,7 @@ export default function HomeScreenLists({ navigation }) {
           <ScrollView
             style={{ paddingTop: headerHeight }}
             showsVerticalScrollIndicator={false}
+            contentContainerStyle={styles.listContainer}
           >
             {data?.homeScreen?.results.map((item, index) => {
               return (
@@ -45,6 +61,7 @@ export default function HomeScreenLists({ navigation }) {
                 />
               );
             })}
+            <MediaList data={watchHistoy} title={"Watch History"} />
           </ScrollView>
         ) : (
           //TODO => refactor
@@ -59,5 +76,8 @@ const styles = StyleSheet.create({
   screenContainer: {
     //backgroundColor: "#fff7",
     flex: 1,
+  },
+  listContainer: {
+    paddingBottom: 200,
   },
 });

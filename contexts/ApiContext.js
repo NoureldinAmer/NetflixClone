@@ -24,6 +24,7 @@ export const ApiProvider = ({ children }) => {
   const fetchData = async (endpoint) => {
     try {
       const response = await axios.get(endpoint);
+      //(response.headers);
       return { endpoint: response.data.endpoint, data: response.data };
     } catch (error) {
       throw error;

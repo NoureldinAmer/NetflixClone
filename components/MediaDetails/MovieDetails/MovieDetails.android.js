@@ -13,10 +13,11 @@ import { AntDesign } from "@expo/vector-icons";
 import VideoPlayerIcon from "../VideoPlayerIcon";
 import { MediaContext } from "../../../contexts/MediaContext";
 import { useNavigation } from "@react-navigation/native";
+import { addMedia } from "../../../util/database";
 
 const MovieDetails = ({ data, error, loading }) => {
   const webViewRef = useRef(null);
-  const { selectedMedia } = useContext(MediaContext);
+  const { selectedMedia, startTimer, stopTimer } = useContext(MediaContext);
   const navigation = useNavigation();
 
   const handleNavigationStateChange = (navState) => {
@@ -25,12 +26,13 @@ const MovieDetails = ({ data, error, loading }) => {
       `https://www.2embed.to/embed/tmdb/movie?id=${selectedMedia.contentID}`
     ) {
       webViewRef.current?.reload();
-      console.log("[RELOADING]");
+      //console.log("[RELOADING]");
     }
     webViewRef.current.injectJavaScript(zoomInScript);
   };
 
   const closeModal = () => {
+    stopTimer();
     webViewRef.current = null;
     navigation.goBack(null);
   };
@@ -50,6 +52,9 @@ const MovieDetails = ({ data, error, loading }) => {
       })();`;
 
     webViewRef.current?.injectJavaScript(script);
+    //addMedia(selectedMedia);
+    startTimer();
+    addMedia(selectedMedia);
   };
 
   return (

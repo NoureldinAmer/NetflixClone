@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import {
   FlatList,
   Image,
+  Keyboard,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -11,6 +12,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import ImageContainer from "./ImageContainer";
 import { MediaContext } from "../contexts/MediaContext";
+import { init, addMovie, deleteDB, verifyDbExists } from "../util/database";
 
 export default function MediaList({
   data,
@@ -21,13 +23,24 @@ export default function MediaList({
   contentContainerStyle,
 }) {
   const navigation = useNavigation();
-  const { setSelectedMediaID } = useContext(MediaContext);
+  const { setSelectedMediaID, stopTimer } = useContext(MediaContext);
 
-  function handlePress(itemID, contentType) {
+  async function handlePress(itemID, contentType, posterPath, placeHolderText) {
+    //stopTimer();
+    //await init();
+    //await verifyDbExists();
     setSelectedMediaID({
       contentID: itemID,
       contentType: contentType,
+      poster_path: posterPath,
+      title: placeHolderText,
     });
+    // console.log({
+    //   itemID,
+    //   contentType,
+    //   posterPath,
+    //   placeHolderText,
+    // });
     navigation.navigate("modal");
   }
 
@@ -44,11 +57,13 @@ export default function MediaList({
           <ImageContainer
             tileSize={tileSize}
             handlePress={handlePress}
-            movieID={item.id}
+            movieID={item.id ? item.id : item.media_id} //item.id => api , item.media_id => DB
             contentType={item.media_type}
             posterPath={item.poster_path}
+            progress={item.progress}
             placeHolderText={
               item.media_type === "movie" ? item.title : item.name
+              //item.title ? item.title : item.name
             }
           />
         )}

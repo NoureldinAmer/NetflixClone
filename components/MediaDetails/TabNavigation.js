@@ -17,7 +17,7 @@ export default function TabNavigation({ recommendations, episodes }) {
     >
       <Tab.Navigator
         style={{
-          height: 720, //TODO => fix tab size height
+          height: 7200, //TODO => fix tab size height
           paddingTop: 20,
         }}
         sceneContainerStyle={{

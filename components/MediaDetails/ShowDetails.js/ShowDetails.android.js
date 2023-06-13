@@ -13,24 +13,27 @@ import { AntDesign } from "@expo/vector-icons";
 import VideoPlayerIcon from "../VideoPlayerIcon";
 import { MediaContext } from "../../../contexts/MediaContext";
 import { useNavigation } from "@react-navigation/native";
+import { addMedia } from "../../../util/database";
 
 const ShowDetails = ({ data, error, loading }) => {
   const webViewRef = useRef(null);
-  const { selectedMedia } = useContext(MediaContext);
+  const { selectedMedia, episodeDetails, startTimer, stopTimer } =
+    useContext(MediaContext);
   const navigation = useNavigation();
 
   const handleNavigationStateChange = (navState) => {
     if (
       navState.url !==
-      `https://www.2embed.to/embed/tmdb/movie?id=${selectedMedia.contentID}`
+      `https://www.2embed.to/embed/tmdb/tv?id=${selectedMedia.contentID}&s=${episodeDetails.seasonNumber}&e=${episodeDetails.episodeNumber}`
     ) {
       webViewRef.current?.reload();
-      console.log("[RELOADING]");
+      //console.log("[RELOADING]");
     }
     webViewRef.current.injectJavaScript(zoomInScript);
   };
 
   const closeModal = () => {
+    stopTimer();
     webViewRef.current = null;
     navigation.goBack(null);
   };
@@ -50,6 +53,9 @@ const ShowDetails = ({ data, error, loading }) => {
       })();`;
 
     webViewRef.current?.injectJavaScript(script);
+    //addMedia(selectedMedia);
+    startTimer();
+    addMedia(selectedMedia);
   };
 
   return (
@@ -69,7 +75,7 @@ const ShowDetails = ({ data, error, loading }) => {
               androidHardwareAccelerationDisabled={false}
               style={styles.WebViewContainer}
               source={{
-                uri: `https://www.2embed.to/embed/tmdb/movie?id=${selectedMedia.contentID}`,
+                uri: `https://www.2embed.to/embed/tmdb/tv?id=${selectedMedia.contentID}&s=${episodeDetails.seasonNumber}&e=${episodeDetails.episodeNumber}`,
               }}
               allowsFullscreenVideo={true}
               injectedJavaScript={zoomInScript}
@@ -79,13 +85,16 @@ const ShowDetails = ({ data, error, loading }) => {
           <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.detailsContainer}>
               <MediaDescription clickMiddle={clickMiddle} media={data} />
-              <TabNavigation recommendations={data.recommendations} />
+              <TabNavigation
+                recommendations={data.recommendations}
+                episodes={data.seasons}
+              />
             </View>
           </ScrollView>
         </>
       ) : (
         <View style={styles.activityIndicatorContainer}>
-          <ActivityIndicator size={"large"} color={"red"} />
+          <ActivityIndicator size={60} color={"red"} />
         </View>
       )}
     </View>
