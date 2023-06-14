@@ -26,9 +26,6 @@ export default function MediaList({
   const { setSelectedMediaID, stopTimer } = useContext(MediaContext);
 
   async function handlePress(itemID, contentType, posterPath, placeHolderText) {
-    //stopTimer();
-    //await init();
-    //await verifyDbExists();
     setSelectedMediaID({
       contentID: itemID,
       contentType: contentType,

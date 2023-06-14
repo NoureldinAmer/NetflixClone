@@ -5,6 +5,7 @@ import { Ionicons } from "react-native-vector-icons";
 import { Feather } from "react-native-vector-icons";
 import { FontAwesome } from "react-native-vector-icons";
 import { MediaContext } from "../../contexts/MediaContext";
+import AnimatedButton from "./AnimatedButtons";
 
 function MediaDescription({ clickMiddle, media }) {
   const { selectedMedia } = useContext(MediaContext);
@@ -66,9 +67,10 @@ function MediaDescription({ clickMiddle, media }) {
       </Text>
       <View>
         <View style={styles.watchList}>
-          <View style={styles.watchListIconBlock}>
-            <Ionicons name="add" size={45} color="white" />
-          </View>
+          <Pressable style={styles.watchListIconBlock}>
+            {/* <Ionicons name="add" size={45} color="white" /> */}
+            <AnimatedButton />
+          </Pressable>
           <View style={styles.watchListIconBlock}>
             <FontAwesome name="thumbs-o-up" size={30} color="white" />
           </View>

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { StatusBar, StyleSheet, View } from "react-native";
 import Navigation from "./screens/Navigation";
 import { useFonts } from "expo-font";
-import AppLoading from "expo-app-loading";
 import { ApiProvider } from "./contexts/ApiContext";
 import { init, deleteDB } from "./util/database";
 import SplashScreen from "./screens/SplashScreen";
@@ -21,14 +20,6 @@ const App = () => {
   const finishLoading = () => {
     setIsLoading(false);
   };
-
-  // if (!fontsLoaded) {
-  //   return <AppLoading />;
-  // }
-
-  // if (!dbInit) {
-  //   return <AppLoading />;
-  // }
 
   useEffect(() => {
     const initialiseDB = async () => {
