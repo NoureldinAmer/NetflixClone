@@ -1,4 +1,5 @@
 node_modules/
+media-sources.md
 .env
 .expo/
 dist/
