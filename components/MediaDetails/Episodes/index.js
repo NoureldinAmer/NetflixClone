@@ -12,7 +12,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { getWatchedEpisodes } from "../../../util/database";
 import { MediaContext } from "../../../contexts/MediaContext";
 import { TouchableRipple } from "react-native-paper";
-import { useRoute } from "@react-navigation/native";
+import { useIsFocused, useRoute } from "@react-navigation/native";
 import SeasonsModal from "./SeasonsModal";
 import EpisodeDetails from "./EpisodeDetails";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -78,7 +78,9 @@ const data = {
 const Episodes = ({ setShowUrl }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [currentSeason, setCurrentSeason] = useState(1);
+  const [componentHeight, setComponentHeight] = useState(0);
   const [watchedEpisodes, setWatchedEpisodes] = useState([]);
+  const isFocused = useIsFocused();
   const { setEpisode, setSelectedMediaRuntime, selectedMedia } =
     useContext(MediaContext);
   const route = useRoute();
@@ -99,8 +101,20 @@ const Episodes = ({ setShowUrl }) => {
     fetchWatchedEpisodes();
   }, []);
 
+  useEffect(() => {
+    if (isFocused) {
+      route.params.setHeight(componentHeight); //give navigator space to display entire media collection
+    }
+  }, [isFocused]);
+
   return (
-    <ScrollView>
+    <View
+      onLayout={(event) => {
+        const { height } = event.nativeEvent.layout;
+        setComponentHeight(height);
+        route.params.setHeight(height); //give navigator space to display entire media collection
+      }}
+    >
       <SeasonsModal
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
@@ -148,7 +162,7 @@ const Episodes = ({ setShowUrl }) => {
           }
         )}
       </View>
-    </ScrollView>
+    </View>
   );
 };
 

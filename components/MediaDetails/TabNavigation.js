@@ -8,6 +8,7 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 
 export default function TabNavigation({ recommendations, episodes }) {
   const { selectedMedia } = useContext(MediaContext);
+  const [childrenHeight, setChildrenHeight] = useState(0);
   const Tab = createMaterialTopTabNavigator();
   return (
     <View
@@ -17,7 +18,7 @@ export default function TabNavigation({ recommendations, episodes }) {
     >
       <Tab.Navigator
         style={{
-          height: 7200, //TODO => fix tab size height
+          height: childrenHeight + 100, //TODO => fix tab size height
           paddingTop: 20,
         }}
         sceneContainerStyle={{
@@ -54,6 +55,7 @@ export default function TabNavigation({ recommendations, episodes }) {
             component={Episodes}
             initialParams={{
               seasons: episodes,
+              setHeight: setChildrenHeight, //give navigator space to display entire media collection
             }}
             options={{
               title: "Episodes",
@@ -65,9 +67,16 @@ export default function TabNavigation({ recommendations, episodes }) {
           component={MediaRecommendations}
           initialParams={{
             recommendations: recommendations,
+            setHeight: setChildrenHeight, //give navigator space to display entire media collection
           }}
           options={{
             title: "More Like This",
+            tabBarAccessibilityLabel: "Tab 2",
+            listeners: {
+              focus: () => {
+                console.log("Tab 2 is focused");
+              },
+            },
           }}
         />
       </Tab.Navigator>
