@@ -30,3 +30,26 @@ This cross-platform app is built using React Native and is designed to replicate
 * Intuitive Movie and TV Show Search
 * Homepage Featuring Trending Movies and Shows
 * Explore page showing upcoming Movies and TV shows
+
+## Install and Run the Project
+1. Clone this repository to your local machine.
+
+```bash
+git clone https://github.com/NoureldinAmer/NetflixClone.git
+```
+
+2. Install the necessary dependencies.
+```bash
+cd NetflixClone
+npm install
+```
+
+3. Install the Expo CLI globally on your machine.
+```bash
+npm install -g expo-cli
+```
+
+4. Start the project.
+```bash
+expo start
+```
